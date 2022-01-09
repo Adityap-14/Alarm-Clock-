@@ -1,0 +1,111 @@
+//c++
+
+// include the library code:
+#include <LiquidCrystal.h>
+#include "tetris.h"
+
+//change the longest's value to change seconds.
+int longest= 25;
+
+//change the middle's value to change minutes.
+int middle= 18;
+
+//change the shortest's value to change hours.
+int shortest= 11;
+
+
+
+
+const int rs = 7, en = 8, d4 = 9, d5 = 10, d6 = 11, d7 = 12;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+void setup() {
+ 
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  // Print a message to the LCD.
+  lcd.print("aditya clock");
+
+  
+}
+
+void loop() {
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting begins with 0):
+  lcd.setCursor(0, 1);
+  // print the number of seconds since reset:
+
+
+if (shortest==9 && middle== 20 && longest==9){
+   lcd.print("ALARM");
+   for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
+
+    // calculates the duration of each note
+    divider = melody[thisNote + 1];
+    if (divider > 0) {
+      // regular note, just proceed
+      noteDuration = (wholenote) / divider;
+    } else if (divider < 0) {
+      // dotted notes are represented with negative durations!!
+      noteDuration = (wholenote) / abs(divider);
+      noteDuration = 1.5; // increases the duration in half for dotted notes
+    }
+
+    // we only play the note for 90% of the duration, leaving 10% as a pause
+    tone(buzzer, melody[thisNote], noteDuration*0.9);
+
+    // Wait for the specief duration before playing the next note.
+    delay(noteDuration);
+
+    // stop the waveform generation before the next note.
+    noTone(buzzer);
+  }
+
+  }
+
+
+
+  
+  if(longest<60){
+    delay(1000);
+    longest=longest+1; millis() / 1000;
+  }
+  else{
+    longest=00;
+  }
+  
+  if(longest>59){
+    middle=middle+1;
+  }
+  else{
+    middle=middle;
+  }
+  
+  if(middle<60){
+    middle=middle;
+    shortest=shortest;
+  }
+  else{
+    middle=0;
+    shortest=shortest+1;
+  }
+
+  if(shortest<24){
+    shortest=shortest;
+  }
+  else{
+    shortest=0;
+  }
+
+ 
+    
+    
+  lcd.setCursor(0, 1);
+  lcd.print(shortest);
+  lcd.print(":");
+  lcd.print(middle);
+  lcd.print(":");
+  lcd.print(longest);
+  
+  
+}
